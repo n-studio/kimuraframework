@@ -24,6 +24,11 @@ module Kimurai::BrowserBuilder
         # Create driver options
         opts = { args: %w[--disable-gpu --no-sandbox --disable-translate] }
 
+        # Page load strategy :normal, :eager, :none
+        if page_load_strategy = @config[:page_load_strategy].presence
+          opts.merge!(page_load_strategy: page_load_strategy)
+        end
+
         # Provide custom chrome browser path:
         if chrome_path = Kimurai.configuration.selenium_chrome_path
           opts.merge!(binary: chrome_path)
